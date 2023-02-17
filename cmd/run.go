@@ -1,27 +1,31 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
 	"fmt"
-
 	"github.com/spf13/cobra"
+	"go-chatgpt-cli/config"
+	"go-chatgpt-cli/services"
 )
 
 // runCmd represents the run command
 var runCmd = &cobra.Command{
 	Use:   "run",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Run chatbot",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("run called")
+		c := &config.KeyConfig{}
+		config.Load(&c)
+		services.InitClient(c.Key)
+		fmt.Println("go-chatgpt-cli is running, use 'exit' or Ctrl-D (i.e. EOF) to exit")
+		for {
+			request := services.PrintUserName(services.DefaultUserName)
+			if request == "exit" {
+				return
+			}
+			services.GetResponse(request)
+		}
 	},
 }
 

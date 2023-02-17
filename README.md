@@ -20,3 +20,4 @@ cobra-cli add help
 cobra-cli add run
 ```
 
+![img.png](img.png)

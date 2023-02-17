@@ -17,6 +17,8 @@ const (
 	colorGray   = 37
 )
 
+var LanLogger = logrus.New()
+
 type LogFormatterParams struct {
 	// TimeStamp is the time at which the log entry was created.
 	TimeStamp time.Time
@@ -82,8 +84,8 @@ func (f *LogFormatterParams) Format(entry *logrus.Entry) ([]byte, error) {
 }
 
 func init() {
-	log := logrus.New()
-	log.Out = os.Stdout
-	log.SetFormatter(&LogFormatterParams{})
-	log.SetLevel(logrus.DebugLevel)
+	//log := logrus.New()
+	LanLogger.Out = os.Stdout
+	LanLogger.SetFormatter(&LogFormatterParams{})
+	LanLogger.SetLevel(logrus.DebugLevel)
 }

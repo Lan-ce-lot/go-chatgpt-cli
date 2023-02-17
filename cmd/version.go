@@ -1,11 +1,10 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
-	"fmt"
+	"go-chatgpt-cli/version"
 
 	"github.com/spf13/cobra"
 )
@@ -13,21 +12,15 @@ import (
 // versionCmd represents the version command
 var versionCmd = &cobra.Command{
 	Use:   "version",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "The version of git is printed on the standard output.",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("version called")
+		cmd.Printf("%s version %s\n", rootCmd.Use, version.Version)
+		//fmt.Printf("%s version %s\n", rootCmd.Use, version.Version)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(versionCmd)
-
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
