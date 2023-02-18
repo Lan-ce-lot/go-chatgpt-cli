@@ -3,9 +3,10 @@ package services
 import (
 	"context"
 	"fmt"
+	"go-chatgpt-cli/logger"
+
 	"github.com/PullRequestInc/go-gpt3"
 	"github.com/kyokomi/emoji/v2"
-	"go-chatgpt-cli/logger"
 )
 
 var client gpt3.Client
@@ -26,28 +27,26 @@ const (
 	temperature = 0.8
 	engine      = gpt3.TextDavinci003Engine
 )
-const DefaultBotName = ":unicorn_face: GPT: "
+const DefaultBotName = ":unicorn_face:GPT: "
 
 func GetResponse(request string) (response string, err error) {
-	fmt.Println()
-	fmt.Print(emoji.Sprint(DefaultBotName))
+	fmt.Println("\n----------------------------------------")
+	fmt.Printf("\u001B[34m%s\u001B[0m", emoji.Sprint(DefaultBotName))
 	i := 0
 	ctx := context.Background()
-	err = client.CompletionStreamWithEngine(
-		ctx,
-		engine,
-		gpt3.CompletionRequest{
-			Prompt:      []string{request},
-			MaxTokens:   gpt3.IntPtr(maxTokens),
-			Temperature: gpt3.Float32Ptr(temperature),
-		}, func(resp *gpt3.CompletionResponse) {
-			fmt.Print(resp.Choices[0].Text)
-			i++
-		},
-	)
-	fmt.Println("\n")
-	if err != nil {
+	err = client.CompletionStreamWithEngine(ctx, engine, gpt3.CompletionRequest{
+		Prompt:      []string{request},
+		MaxTokens:   gpt3.IntPtr(maxTokens),
+		Temperature: gpt3.Float32Ptr(temperature),
+	}, func(resp *gpt3.CompletionResponse) {
+		fmt.Print(resp.Choices[0].Text)
+		i++
+	})
 
+	fmt.Println("\n========================================")
+	fmt.Print("\n\n")
+
+	if err != nil {
 		logger.LanLogger.Errorf("error: %v", err)
 		return "", err
 	}

@@ -1,12 +1,12 @@
-/*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-*/
+// Copyright © 2023 Lancelot
+
 package cmd
 
 import (
-	"github.com/spf13/cobra"
 	"go-chatgpt-cli/config"
 	"time"
+
+	"github.com/spf13/cobra"
 )
 
 // setCmd represents the set command

@@ -1,10 +1,10 @@
 package config
 
 import (
-	"github.com/takecy/go-localconfig/conf"
 	"go-chatgpt-cli/logger"
-	"log"
 	"time"
+
+	localconf "github.com/takecy/go-localconfig/conf"
 )
 
 // conf keep openAI API key
@@ -38,24 +38,4 @@ func init() {
 	conf = localconf.NewConfig(appName, fileName)
 	Path = conf.Path()
 	logger.LanLogger.Printf("config.path: %s", conf.Path())
-}
-
-func main() {
-	c := KeyConfig{
-		Key:  "test",
-		Date: time.Now(),
-	}
-	nc := KeyConfig{}
-	err := Save(c)
-	if err != nil {
-		log.Fatal(err)
-	}
-	// sleep 2 sec
-	//time.Sleep(2 * time.Second)
-	err = Load(&nc)
-	if err != nil {
-		return
-	}
-	logger.LanLogger.Printf("nc: %+v\n", nc)
-	//err = Cleanup()
 }

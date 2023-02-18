@@ -2,10 +2,11 @@ package logger
 
 import (
 	"bytes"
-	"github.com/sirupsen/logrus"
 	"reflect"
 	"testing"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 func TestLogFormatterParamsFormat(t *testing.T) {

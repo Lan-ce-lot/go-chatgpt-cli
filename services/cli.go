@@ -3,14 +3,15 @@ package services
 import (
 	"bufio"
 	"fmt"
-	"github.com/kyokomi/emoji/v2"
 	"os"
+
+	"github.com/kyokomi/emoji/v2"
 )
 
-const DefaultUserName = ":satisfied: You: "
+const DefaultUserName = ":satisfied:You: "
 
 func GetRequest() string {
-	fmt.Println("\n")
+	fmt.Print("\n")
 	scan := bufio.NewScanner(os.Stdin)
 	if scan.Scan() {
 		return scan.Text()
@@ -18,6 +19,7 @@ func GetRequest() string {
 	return "exit"
 }
 func PrintUserName(name string) string {
-	fmt.Print(emoji.Sprint(name))
+	fmt.Println("========================================")
+	fmt.Printf("\u001B[33m%s\u001B[0m", emoji.Sprint(name))
 	return GetRequest()
 }

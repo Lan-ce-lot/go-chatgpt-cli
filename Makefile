@@ -68,8 +68,13 @@ go-compile: go-get go-build
 
 go-build:
 	@echo "  >  Building binary..."
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go build $(LDFLAGS) -o $(GOBIN)/$(PROJECTNAME) $(GOFILES)
-
+	@GOPATH=$(GOPATH)  GOBIN=$(GOBIN) go build $(LDFLAGS) -o $(GOBIN)/$(PROJECTNAME) $(GOFILES)
+go-build-windows:
+	@echo "  >  Building binary..."
+	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) GOOS=windows GOARCH=amd64 go build $(LDFLAGS) -o $(GOBIN)/$(PROJECTNAME).exe $(GOFILES)
+go-build-linux:
+	@echo "  >  Building binary..."
+	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) GOOS=linux GOARCH=amd64 go build $(LDFLAGS) -o $(GOBIN)/$(PROJECTNAME) $(GOFILES)
 go-generate:
 	@echo "  >  Generating dependency files..."
 	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go generate $(generate)

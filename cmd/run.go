@@ -1,14 +1,24 @@
-/*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-*/
+// Copyright © 2023 Lancelot
+
 package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"go-chatgpt-cli/config"
 	"go-chatgpt-cli/services"
+
+	"github.com/spf13/cobra"
 )
+
+const Banner = `
+                        _           _              _             _ _
+  __ _  ___         ___| |__   __ _| |_ __ _ _ __ | |_       ___| (_)
+ / _` + "`" + ` |/ _ \ _____ / __| '_ \ / _` + "`" + ` | __/ _` + "`" + ` | '_ \| __|____ / __| | |
+| (_| | (_) |_____| (__| | | | (_| | || (_| | |_) | ||_____| (__| | |
+ \__, |\___/       \___|_| |_|\__,_|\__\__, | .__/ \__|     \___|_|_|
+ |___/                                 |___/|_|
+
+`
 
 // runCmd represents the run command
 var runCmd = &cobra.Command{
@@ -16,15 +26,22 @@ var runCmd = &cobra.Command{
 	Short: "Run chatbot",
 	Run: func(cmd *cobra.Command, args []string) {
 		c := &config.KeyConfig{}
-		config.Load(&c)
+		err := config.Load(&c)
+		if err != nil {
+			return
+		}
 		services.InitClient(c.Key)
-		fmt.Println("go-chatgpt-cli is running, use 'exit' or Ctrl-D (i.e. EOF) to exit")
+		fmt.Printf("\u001B[33m%s\u001B[0m", Banner)
+		fmt.Printf("go-chatgpt-cli is running, use 'exit' or Ctrl-D (i.e. EOF) to exit\n\n")
 		for {
 			request := services.PrintUserName(services.DefaultUserName)
 			if request == "exit" {
 				return
 			}
-			services.GetResponse(request)
+			_, err := services.GetResponse(request)
+			if err != nil {
+				return
+			}
 		}
 	},
 }

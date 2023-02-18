@@ -1,11 +1,12 @@
-/*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-*/
+// Copyright © 2023 Lancelot
+
 package cmd
 
 import (
-	"github.com/spf13/cobra"
 	"go-chatgpt-cli/config"
+	"go-chatgpt-cli/logger"
+
+	"github.com/spf13/cobra"
 )
 
 // clearCmd represents the clear command
@@ -13,7 +14,11 @@ var clearCmd = &cobra.Command{
 	Use:   "clear",
 	Short: "Clear openAI key",
 	Run: func(cmd *cobra.Command, args []string) {
-		config.Cleanup()
+		err := config.Cleanup()
+		if err != nil {
+			logger.LanLogger.Error(err)
+			return
+		}
 		cmd.Printf("clear config in %s\n", config.Path)
 	},
 }

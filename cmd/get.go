@@ -1,11 +1,12 @@
-/*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-*/
+// Copyright © 2023 Lancelot
+
 package cmd
 
 import (
-	"github.com/spf13/cobra"
 	"go-chatgpt-cli/config"
+	"go-chatgpt-cli/logger"
+
+	"github.com/spf13/cobra"
 )
 
 // getCmd represents the get command
@@ -14,7 +15,11 @@ var getCmd = &cobra.Command{
 	Short: "Get openAI key that you set",
 	Run: func(cmd *cobra.Command, args []string) {
 		c := &config.KeyConfig{}
-		config.Load(c)
+		err := config.Load(c)
+		if err != nil {
+			logger.LanLogger.Error(err)
+			return
+		}
 		cmd.Printf("key:  [%s]\ndate: [%s]\n", c.Key, c.Date)
 	},
 }

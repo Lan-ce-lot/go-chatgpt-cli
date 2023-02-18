@@ -1,9 +1,9 @@
-/*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-*/
+// Copyright © 2023 Lancelot
+
 package cmd
 
 import (
+	"go-chatgpt-cli/logger"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -14,9 +14,9 @@ var rootCmd = &cobra.Command{
 	Use:   "go-chatgpt-cli",
 	Short: "A brief description of your application",
 	Long: `
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Go-chatgpt-cli is a CLI to communication to gpt3.
+
+`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	//Run: func(cmd *cobra.Command, args []string) {
@@ -28,21 +28,11 @@ to quickly create a Cobra application.`,
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	err := rootCmd.Execute()
-	if err != nil {
+	if e := rootCmd.Execute(); e != nil {
+		logger.LanLogger.Error(e)
 		os.Exit(1)
 	}
 }
 
 func init() {
-
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.go-chatgpt-cli.yaml)")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
